@@ -1,0 +1,18 @@
+{
+  "name": "space-inspiration",
+  "version": "1.0.0",
+  "description": "una aplicación parecida a la aplicación Momentum Dash, mostrando la imagen astronómica del día desde la API de la NASA, junto con la cita del día de la API de TheySaidSo. ",
+  "main": "mifirst.js",
+  "repository": "git@github.com:Gante82/NodeJsTest.git",
+  "author": "Ganet82",
+  "license": "ISC",
+  "scripts": {
+    "build": "browserify app.js -o bundle.js",
+    "start": "http-server -p 9090"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "browserify": "^14.5.0",
+    "http-server": "^0.10.0"
+  }
+}
