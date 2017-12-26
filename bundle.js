@@ -9,9 +9,9 @@ var app = {
         document.querySelector(".astro__info h2").innerHTML = img.title;
         document.querySelector(".astro__info p").innerHTML = img.explanation;
         if (img.media_type == "video") {
-            document.querySelector(".astro__info").innerHTML += "<iframe src='" + img.url + "'>";
+            document.querySelector(".astro__img").innerHTML += "<iframe src='" + img.url + "'>";
         } else {
-            document.querySelector(".astro__info").innerHTML += "<img src='" + img.url + "'>";
+            document.querySelector(".astro__img").innerHTML += "<img src='" + img.url + "'>";
         }
     },
     addToggleBehaviour: function () {
@@ -25,8 +25,6 @@ var app = {
                 toggleButton.innerHTML = "i";
             }
             document.querySelector(".toggle").classList.toggle("open");
-            document.querySelector(".astro__info").classList.toggle("visible");
-
         });
     }
 
