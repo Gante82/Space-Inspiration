@@ -1,9 +1,11 @@
 const nasa = require("./nasa");
+const theySaidSo = require("./theysaidso");
 var $ = require("jquery");
 var app = {
     run: function () {
-        let imgNasa = nasa.getImgNasa(app.processImg);
         app.addToggleBehaviour();
+        nasa.getImgNasa(app.processImg);
+        theySaidSo.getInspiringQuote(app.processQuote);
     },
     processImg: function (img) {
         document.querySelector(".astro__info h2").innerHTML = img.title;
@@ -14,6 +16,10 @@ var app = {
             // document.querySelector(".astro__info").innerHTML += "<img src='"+img.url+"'>";
             $(".astro__img").css("background-image", "url(" + img.url + ")");
         }
+    },
+    processQuote: function (quote) {
+        document.querySelector(".quote__text").innerHTML = quote.contents.quotes[0].quote;
+        document.querySelector(".quote__author").innerHTML = quote.contents.quotes[0].author;
     },
     addToggleBehaviour: function () {
         let toggleButton = document.querySelector(".toggle");

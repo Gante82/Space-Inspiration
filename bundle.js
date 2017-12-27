@@ -1,46 +1,55 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 const nasa = require("./nasa");
+const theySaidSo = require("./theysaidso");
+var $ = require("jquery");
 var app = {
     run: function () {
-        nasa.getImgNasa(app.processImg);
         app.addToggleBehaviour();
+        nasa.getImgNasa(app.processImg);
+        theySaidSo.getInspiringQuote(app.processQuote);
     },
     processImg: function (img) {
         document.querySelector(".astro__info h2").innerHTML = img.title;
         document.querySelector(".astro__info p").innerHTML = img.explanation;
         if (img.media_type == "video") {
-            document.querySelector(".astro__img").innerHTML += "<iframe src='" + img.url + "'>";
+            document.querySelector(".astro__info").innerHTML += "<iframe src='" + img.url + "'>";
         } else {
-            document.querySelector(".astro__img").innerHTML += "<img src='" + img.url + "'>";
+            // document.querySelector(".astro__info").innerHTML += "<img src='"+img.url+"'>";
+            $(".astro__img").css("background-image", "url(" + img.url + ")");
         }
+    },
+    processQuote: function (quote) {
+        document.querySelector(".quote__text").innerHTML = quote.contents.quotes[0].quote;
+        document.querySelector(".quote__author").innerHTML = quote.contents.quotes[0].author;
     },
     addToggleBehaviour: function () {
         let toggleButton = document.querySelector(".toggle");
         toggleButton.addEventListener('click', function (e) {
             e.preventDefault();
-            document.querySelector(".toggle").classList.toggle("open");
+            toggleButton.classList.toggle("open");
             if (toggleButton.innerHTML == "i") {
+                $(".astro__info").show();
                 toggleButton.innerHTML = "x";
             } else {
                 toggleButton.innerHTML = "i";
+                $(".astro__info").hide();
             }
-            document.querySelector(".toggle").classList.toggle("open");
         });
     }
 
 };
 app.run();
-},{"./nasa":2}],2:[function(require,module,exports){
-var $ = require ("jquery");
+},{"./nasa":2,"./theysaidso":4,"jquery":3}],2:[function(require,module,exports){
+var $ = require("jquery");
 var url = "https://api.nasa.gov/planetary/apod?api_key=dOOLKnO3OFjfmExrgunSmBIdgPxQydBybkTAj5VS";
 
 module.exports.getImgNasa = function (callback) {
-  $.ajax({
-    url: url,
-    success: function(result) {
-    callback(result);
-  }
-  });
+    $.ajax({
+        url: url,
+        success: function (result) {
+            callback(result);
+        }
+    });
 }
 },{"jquery":3}],3:[function(require,module,exports){
 /*!
@@ -10297,4 +10306,16 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}]},{},[1]);
+},{}],4:[function(require,module,exports){
+var $ = require("jquery");
+var url = "http://quotes.rest/qod.json?category=inspire";
+
+module.exports.getInspiringQuote = function (callback) {
+    $.ajax({
+        url: url,
+        success: function (result) {
+            callback(result);
+        }
+    });
+}
+},{"jquery":3}]},{},[1]);
